@@ -997,8 +997,6 @@ dependencies = [
 [[package]]
 name = "hyperlight-wasm"
 version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d1c0b51415ca0f861ccc14b81bc1bf6e1e821ff573b23828619316e6dc06522a"
 dependencies = [
  "anyhow",
  "blake3",

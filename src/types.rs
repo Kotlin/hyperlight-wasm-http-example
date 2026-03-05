@@ -5,6 +5,7 @@ use crate::bindings::root::component::RootImports;
 pub mod buffer;
 pub mod cli;
 pub mod clocks_monotonic_clock;
+pub mod clocks_wall_clock;
 pub mod headers;
 pub mod http_future;
 pub mod http_future_headers;
@@ -96,6 +97,12 @@ impl RootImports for WasiImpl {
     type Stdin = Self;
 
     fn stdin(&mut self) -> impl BorrowMut<Self> {
+        self
+    }
+
+    type WallClock = Self;
+
+    fn wall_clock(&mut self) -> impl BorrowMut<Self> {
         self
     }
 }
