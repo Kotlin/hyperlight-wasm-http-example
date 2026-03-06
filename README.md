@@ -1,24 +1,27 @@
-# `hyperlight-wasm` http example
+TODO before making public:
+- [ ] Probably re-create this repo as a public fork of the original project
+
+# `hyperlight-wasm` http example: Kotlin
 
 This is a minimal example of a
-[hyperlight-wasm](https://github.com/hyperlight-dev/hyperlight-wasm)
+[hyperlight-wasm](https://github.com/Kotlin/hyperlight-wasm)
 host application. It implements just enough of the `wasi:http` api
-to run the [sample_wasi_http_rust
-server](https://github.com/bytecodealliance/sample-wasi-http-rust).
+to run the [sample-wasi-http-kotlin server](https://github.com/Kotlin/sample-wasi-http-kotlin).
+
+It's forked from https://github.com/hyperlight-dev/hyperlight-wasm-http-example, as the changes here are specific to a Kotlin guest component.
+
+In general, this example is only a prototype, and relatively hacky and fragile, use at your own risk.
 
 ## Prerequisites
 
 1. [Rust](https://www.rust-lang.org/tools/install), including the `x86_64-unknown-none` target (which may be installed via e.g. `rustup target add x86_64-unknown-none`)
+    - Specifically, we need ***both*** Rust versions 1.87 and 1.89
 2. `clang`
-3. [`just`](https://github.com/casey/just) (optional, but recommended)
+3. [`just`](https://github.com/casey/just)
 
-If you want to follow the manual build instructions, you will also need:
+## Setup
 
-4. [`wasm-tools`](https://github.com/bytecodealliance/wasm-tools)
-5. [`cargo-component`](https://github.com/bytecodealliance/cargo-component)
-6. [`hyperlight-wasm-aot`](https://github.com/hyperlight-dev/hyperlight-wasm)
-
-## Simple setup
+NOTE: The build system fetches multiple git repositories (sometimes recursively). That means that updating one of them might not correctly propagate "all the way up", so if in doubt, run `just clean`.
 
 ### Building
 
@@ -32,52 +35,9 @@ just build
 just run
 ```
 
-From another terminal, you can then test the server:
+From another terminal, you can then test the server with the included [curlIt.sh](curlIt.sh) script:
 
 ```sh
-curl http://localhost:3000/
-curl -w'\n' -d "hola mundo" http://127.0.0.1:3000/echo
-curl -I -H "x-language: spanish" http://127.0.0.1:3000/echo-headers
-# get the content of .gitignore from github.com/jprendes/hyperlight-wasm-http-example
-curl -w'\n' http://127.0.0.1:3000/proxy
+./curlIt.sh
 ```
 
-## Manual setup
-
-### Building
-
-Compile the WIT and set the environment variables used when building
-(both the host and the guest):
-
-```sh
-wasm-tools component wit hyperlight.wit -w -o hyperlight-world.wasm
-```
-
-Build:
-```
-cargo build
-```
-
-### Running
-
-Build the guest component:
-```sh
-cargo component build --release \
-    --manifest-path guest/Cargo.toml \
-    --target-dir target
-```
-
-AOT compile it:
-
-```sh
-cargo install hyperlight-wasm-aot
-hyperlight-wasm-aot compile --component \
-    target/wasm32-wasip1/release/sample_wasi_http_rust.wasm \
-    target/wasm32-wasip1/release/sample_wasi_http_rust.bin
-```
-
-You can then run the server:
-
-```sh
-cargo run -- target/wasm32-wasip1/release/sample_wasi_http_rust.bin
-```
