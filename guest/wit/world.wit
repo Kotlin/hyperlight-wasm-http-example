@@ -1,0 +1,6 @@
+package root:component;
+
+world root {
+  include wasi:http/proxy@0.2.9;
+  import wasi:cli/stdout@0.2.9;
+}
