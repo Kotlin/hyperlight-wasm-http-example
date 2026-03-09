@@ -10,23 +10,6 @@ HYPERLIGHT_AOT := justfile_directory() + "/hyperlight-wasm/target/debug/hyperlig
 
 default: run
 
-#install-cargo-component:
-#    test -f {{ BIN_DIR }}/cargo-component || \
-#    cargo install cargo-component \
-#        --root {{ TARGET_DIR }}
-
-# For kotlin: assumes component is already available under guest/TODO
-#build-component: install-cargo-component
-#    test -f {{ TARGET_DIR }}/wasm32-wasip1/release/sample_wasi_http_rust.wasm || \
-#    cargo-component build --release \
-#        --manifest-path {{ GUEST_DIR }}/Cargo.toml \
-#        --target-dir {{ TARGET_DIR }}
-
-#install-hyperlight-wasm-aot:
-#    test -f {{ BIN_DIR }}/hyperlight-wasm-aot || \
-#    cargo install hyperlight-wasm-aot \
-#        --root {{ TARGET_DIR }}
-
 clean:
     rm -rf sample-wasi-http-kotlin
     rm -f hyperlight-world.wasm
