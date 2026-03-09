@@ -5,3 +5,5 @@ target/
 *.wasm
 *.bin
 *.back
+hyperlight-wasm
+sample-wasi-http-kotlin
