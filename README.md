@@ -18,6 +18,7 @@ In general, this example is only a prototype, and relatively hacky and fragile, 
     - Specifically, we need ***both*** Rust versions 1.87 and 1.89
 2. `clang`
 3. [`just`](https://github.com/casey/just)
+4. All requirements of [sample-wasi-http-kotlin server](https://github.com/Kotlin/sample-wasi-http-kotlin), except for wasmtime.
 
 ## Setup
 
