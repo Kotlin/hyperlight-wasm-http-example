@@ -22,6 +22,7 @@ build-guest-component:
     make -C sample-wasi-http-kotlin componentify-prod
     cp sample-wasi-http-kotlin/build/sample-wasi-http-kotlin-component.wasm {{ KOTLIN_GUEST_COMPONENT_WASM }}
 
+# git submodule might be a bit nicer, but adds more complexity, and this is simple and understandable
 build-hyperlight-itself:
     #!/usr/bin/env bash
     git clone git@github.com:Kotlin/hyperlight-wasm.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
