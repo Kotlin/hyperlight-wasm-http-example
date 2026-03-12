@@ -18,6 +18,7 @@ clean:
 build-guest-component:
     #!/usr/bin/env bash
     git clone git@github.com:Kotlin/sample-wasi-http-kotlin.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
+    git -C sample-wasi-http-kotlin checkout 832074f54fb4db05d3242e7f9887754c54e38914 || true
     make -C sample-wasi-http-kotlin checkout-wit-bindgen 
     # hack into the process, because cargo otherwise uses the toolchain specified in the root of *this* repo, which is too old for wit-bindgen
     echo -e '[toolchain]\nchannel = "1.89"' > sample-wasi-http-kotlin/wit-bindgen-kotlin/rust-toolchain.toml
