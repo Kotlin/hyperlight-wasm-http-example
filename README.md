@@ -1,6 +1,3 @@
-TODO before making public:
-- [ ] Probably re-create this repo as a public fork of the original project
-
 # `hyperlight-wasm` http example: Kotlin
 
 This is a minimal example of a
@@ -8,7 +5,7 @@ This is a minimal example of a
 host application. It implements just enough of the `wasi:http` api
 to run the [sample-wasi-http-kotlin server](https://github.com/Kotlin/sample-wasi-http-kotlin).
 
-It's forked from https://github.com/hyperlight-dev/hyperlight-wasm-http-example, as the changes here are specific to a Kotlin guest component.
+It's forked from https://github.com/hyperlight-dev/hyperlight-wasm-http-example, as the changes here are specific to a Kotlin guest component. It is intended for demonstration purposes only, and not guaranteed to be kept up-to-date.
 
 In general, this example is only a prototype, and relatively hacky and fragile, use at your own risk.
 
