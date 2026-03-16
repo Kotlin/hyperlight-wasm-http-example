@@ -1,0 +1,66 @@
+name: Integration Test
+
+on:
+  repository_dispatch:
+    types: [upstream-changed]
+  push:
+    branches: [kotlin]
+  pull_request:
+    branches: [kotlin]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Install Rust
+        run: |
+          rustup install --no-self-update 1.87 1.89
+          rustup default 1.89
+          rustup target add x86_64-unknown-none
+
+      - name: Install clang
+        run: sudo apt-get install -y clang
+
+      - uses: extractions/setup-just@v2
+
+      - name: Install wasm-tools
+        run: cargo install --locked wasm-tools
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Configure Git to use HTTPS instead of SSH
+        run: git config --global url."https://github.com/".insteadOf "git@github.com:"
+
+      - name: Build
+        run: just build
+
+      - name: Smoke test
+        run: |
+          just run &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID 2>/dev/null || true" EXIT
+
+          for i in $(seq 1 30); do
+            if curl -s http://localhost:3000 > /dev/null 2>&1; then
+              break
+            fi
+            sleep 4
+          done
+
+          ./smokeTest.sh
