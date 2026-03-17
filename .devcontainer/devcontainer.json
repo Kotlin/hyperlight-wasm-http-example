@@ -1,0 +1,34 @@
+{
+  "name": "Hyperlight Wasm HTTP Example",
+
+  "image": "ghcr.io/hyperlight-dev/hyperlight-wasm-http-example-devcontainer:latest",
+
+  "containerUser": "vscode",
+  "containerEnv": {
+    "DEVICE": "/dev/kvm",
+    "REMOTE_USER": "vscode",
+    "REMOTE_GROUP": "vscode"
+  },
+
+  "runArgs": [
+    "--device=/dev/kvm"
+  ],
+
+  "postStartCommand": "bash .devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "dbaeumer.vscode-eslint",
+        "bytecodealliance.starlingmonkey-debugger"
+      ],
+      "settings": {
+        "rust-analyzer.rustfmt.extraArgs": [
+          "+nightly"
+        ]
+      }
+    }
+  }
+}

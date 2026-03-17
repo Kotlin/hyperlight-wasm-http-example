@@ -39,3 +39,7 @@ From another terminal, you can then test the server with the included [curlIt.sh
 ./curlIt.sh
 ```
 
+
+## Try it yourself! (well, not yet, hopefully at some point :))
+
+[GitHub codespaces](https://codespaces.new/Kotlin/hyperlight-wasm-http-example)
