@@ -1,7 +1,7 @@
 {
   "name": "Hyperlight Wasm HTTP Example",
 
-  "image": "ghcr.io/hyperlight-dev/hyperlight-wasm-http-example-devcontainer:latest",
+  "build": { "dockerfile": "Dockerfile" },
 
   "containerUser": "vscode",
   "containerEnv": {

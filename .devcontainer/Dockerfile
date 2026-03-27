@@ -1,6 +1,7 @@
 ## Dockerfile for devcontainer
 
-FROM mcr.microsoft.com/devcontainers/base:bookworm AS base
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04 AS base
+
 
 ARG USER=vscode
 ARG GROUP=vscode
@@ -23,7 +24,9 @@ RUN apt-get update \
         software-properties-common \
         sudo \
         wget \
-        musl-tools
+        musl-tools \
+        default-jdk
+
 
 ARG LLVM_VERSION=18
 
@@ -57,14 +60,17 @@ ARG RUST_TOOLCHAIN=1.89
 
 # Install rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && rustup install --no-self-update 1.87 ${RUST_TOOLCHAIN} \
     && rustup default ${RUST_TOOLCHAIN} \
     && rustup target add x86_64-unknown-linux-gnu \
     && rustup target add x86_64-unknown-linux-musl \
     && rustup target add x86_64-unknown-none      \
     && rustup target add wasm32-wasip1             \
     && rustup toolchain add nightly-x86_64-unknown-linux-gnu \
-    && cargo install just \
-    && cargo install cargo-component \
-    && cargo install cargo-hyperlight \
+    && rustup target add x86_64-unknown-none --toolchain 1.87.0 \
+    && cargo install --locked just \
+    && cargo install --locked cargo-component \
+    && cargo install --locked cargo-hyperlight \
+    && cargo install --locked wasm-tools \
     && cargo install hyperlight-wasm-aot --locked --version 0.12.0 \
-    && cargo install wasmtime-cli --locked --version 36.0.6
+    && cargo install wasmtime-cli --locked --version 37.0.0

@@ -40,6 +40,8 @@ From another terminal, you can then test the server with the included [curlIt.sh
 ```
 
 
-## Try it yourself! (well, not yet, hopefully at some point :))
+## Try it yourself!
+
+**Note**: The size of the intermediate build results of some of the required rust packages can exceed the 32GB disk space that GitHub codespaces provides with its lowest-end machines. To circumvent this issue, select a 64GB machine when creating your codespace.
 
 [GitHub codespaces](https://codespaces.new/Kotlin/hyperlight-wasm-http-example)
