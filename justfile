@@ -13,6 +13,7 @@ default: run
 clean:
     rm -rf sample-wasi-http-kotlin
     rm -f hyperlight-world.wasm
+    rm -rf hyperlight-wasm
     cargo clean
 
 build-guest-component:
