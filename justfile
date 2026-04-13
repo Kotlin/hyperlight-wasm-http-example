@@ -18,7 +18,7 @@ clean:
 
 build-guest-component:
     #!/usr/bin/env bash
-    git clone git@github.com:Kotlin/sample-wasi-http-kotlin.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
+    git clone https://github.com/Kotlin/sample-wasi-http-kotlin.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
     RUSTUP_TOOLCHAIN=1.89 make -e -C sample-wasi-http-kotlin setup
     make -C sample-wasi-http-kotlin componentify-prod
     cp sample-wasi-http-kotlin/build/sample-wasi-http-kotlin-component.wasm {{ KOTLIN_GUEST_COMPONENT_WASM }}
@@ -26,7 +26,7 @@ build-guest-component:
 # git submodule might be a bit nicer, but adds more complexity, and this is simple and understandable
 build-hyperlight-itself:
     #!/usr/bin/env bash
-    git clone git@github.com:Kotlin/hyperlight-wasm.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
+    git clone https://github.com/Kotlin/hyperlight-wasm.git 2>&1 | grep --invert-match 'fatal:.*already exists.*not.*empty directory' || true
     cd hyperlight-wasm && just build
 
 
