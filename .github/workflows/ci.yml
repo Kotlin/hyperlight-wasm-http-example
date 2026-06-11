@@ -1,5 +1,16 @@
 name: Integration Test
 
+run-name: >-
+  ${{
+    (github.event_name == 'repository_dispatch' && github.event.client_payload.pr_number
+      && format('wit-bindgen PR #{0} {1}', github.event.client_payload.pr_number, github.event.client_payload.sha))
+    || (github.event_name == 'repository_dispatch'
+      && format('wit-bindgen push {0}', github.event.client_payload.sha))
+    || (github.event_name == 'pull_request' && github.event.pull_request.title)
+    || (github.event_name == 'push' && github.event.head_commit.message)
+    || github.workflow
+  }}
+
 on:
   repository_dispatch:
     types: [upstream-changed]
@@ -17,6 +28,24 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Annotate upstream context
+        if: github.event_name == 'repository_dispatch'
+        env:
+          PR_NUMBER: ${{ github.event.client_payload.pr_number }}
+          PR_URL: ${{ github.event.client_payload.pr_url }}
+          SHA: ${{ github.event.client_payload.sha }}
+          COMMIT_URL: ${{ github.event.client_payload.commit_url }}
+          UPSTREAM_REPO: ${{ github.event.client_payload.repo }}
+        run: |
+          {
+            echo "### Triggered by [\`${UPSTREAM_REPO}\`](${{ github.server_url }}/${UPSTREAM_REPO})"
+            echo ""
+            if [ -n "${PR_NUMBER}" ]; then
+              echo "- **PR:** [#${PR_NUMBER}](${PR_URL})"
+            fi
+            echo "- **Commit:** [\`${SHA:0:7}\`](${COMMIT_URL})"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - uses: actions/checkout@v4
 
       - name: Enable KVM
