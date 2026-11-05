@@ -37,7 +37,7 @@ jobs:
       - uses: extractions/setup-just@v2
 
       - name: Install wasm-tools
-        run: cargo install --locked wasm-tools
+        run: cargo install --locked wasm-tools --version 1.258.3
 
       - uses: actions/setup-java@v4
         with:

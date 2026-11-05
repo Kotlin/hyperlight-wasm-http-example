@@ -71,6 +71,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
     && cargo install --locked just \
     && cargo install --locked cargo-component \
     && cargo install --locked cargo-hyperlight \
-    && cargo install --locked wasm-tools \
+    && cargo install --locked wasm-tools --version 1.258.3 \
     && cargo install hyperlight-wasm-aot --locked --version 0.12.0 \
     && cargo install wasmtime-cli --locked --version 37.0.0
