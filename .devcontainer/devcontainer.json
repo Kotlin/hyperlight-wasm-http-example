@@ -3,6 +3,10 @@
 
   "build": { "dockerfile": "Dockerfile" },
 
+  "hostRequirements": {
+    "storage": "64gb"
+  },
+
   "containerUser": "vscode",
   "containerEnv": {
     "DEVICE": "/dev/kvm",
