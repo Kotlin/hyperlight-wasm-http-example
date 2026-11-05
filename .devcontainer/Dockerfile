@@ -68,9 +68,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
     && rustup target add wasm32-wasip1             \
     && rustup toolchain add nightly-x86_64-unknown-linux-gnu \
     && rustup target add x86_64-unknown-none --toolchain 1.87.0 \
-    && cargo install --locked just \
-    && cargo install --locked cargo-component \
-    && cargo install --locked cargo-hyperlight \
+    && cargo install --locked just --version 1.59.0 \
+    && cargo install --locked cargo-component --version 0.21.1 \
+    && cargo install --locked cargo-hyperlight --version 0.1.14 \
     && cargo install --locked wasm-tools --version 1.258.3 \
     && cargo install hyperlight-wasm-aot --locked --version 0.12.0 \
     && cargo install wasmtime-cli --locked --version 37.0.0

@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   integration-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -35,6 +35,8 @@ jobs:
         run: sudo apt-get install -y clang
 
       - uses: extractions/setup-just@v2
+        with:
+          just-version: 1.59.0
 
       - name: Install wasm-tools
         run: cargo install --locked wasm-tools --version 1.258.3
